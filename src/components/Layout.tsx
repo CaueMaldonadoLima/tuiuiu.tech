@@ -1,4 +1,3 @@
-import Tabela from "./Tabela";
 
 export default function Layout() {
     return (
@@ -26,4 +25,17 @@ export default function Layout() {
             </div>
         </div>
     )
+}
+function handleInputChange(event) {
+    const value = event.target.value;
+    linkProduto(value)
+
+}
+async function linkProduto(linkProduto){
+    try {
+        const retorno = await link(linkProduto);
+
+    } catch (error) {
+        console.error(error);
+    }
 }
