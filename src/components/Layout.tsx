@@ -1,3 +1,4 @@
+import Tabela from "./Tabela";
 
 export default function Layout() {
     return (
@@ -19,31 +20,7 @@ export default function Layout() {
                     </div>
                     <div className="w-2/3 p-4 relative rounded-lg">
                         <div className="absolute bg-gradient-to-r from-green-600 to-blue-600 blur inset-x-3 inset-y-3"></div>
-                        <div className="relative bg-gray-900 p-5 rounded-lg h-6/12">
-                            <input
-                                type="text"
-                                className="w-full border bg-gray-900 border-gray-300 p-2 rounded-lg mb-4"
-                                placeholder="Digite seu produto..."
-                            />
-                            <table className="w-full mt-10">
-                                <thead>
-                                    <tr>
-                                        <th className="border p-2 py-4">Produto</th>
-                                        <th className="border p-2 py-4">Avaliação Média</th>                                        
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td className="border p-2 py-4">Dado 1</td>
-                                        <td className="border p-2 py-4">Dado 2</td>                                        
-                                    </tr>
-                                    <tr>
-                                        <td className="border p-2 py-4">Dado 3</td>
-                                        <td className="border p-2 py-4">Dado 4</td>                                        
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <Tabela />
                     </div>
                 </div>
             </div>
