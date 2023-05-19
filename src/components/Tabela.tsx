@@ -1,5 +1,6 @@
 import CardTabela from "./CardTabela";
-import { useState } from "react";
+import {useState} from "react";
+import axios from "axios";
 
 interface Produto {
     id: number;
@@ -13,22 +14,48 @@ export default function Tabela() {
     const [produto, setProduto] = useState("");
     const [avaliacao, setAvaliacao] = useState<number | undefined>();
     const [produtos, setProdutos] = useState<Produto[]>([]);
-    
+    const [isLoading, setIsLoading] = useState(false)
     const pesquisarProduto = () => {
-        // pesquisa do produto com base no link fornecido
-        const novoProduto = {
-          id: produtos.length + 1,
-          nome: produto,
-          avaliacao: avaliacao || 0, // usar valor padrão caso a avaliação não esteja definida
+        const pesquisarProdutoAPI = async () => {
+            try {
+                setIsLoading(true);
+                const response = await axios.post(`http://localhost:5000/link`,
+                    {
+                        link : produto,
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    });
+                const data = await response;
+                let novoProduto = {
+                    id: produtos.length + 1,
+                    nome: data.data.produto,
+                    avaliacao: data.data.avaliacao || 0
+                };
+                setProdutos((prevProdutos) => [...prevProdutos, novoProduto]);
+                setProduto("");
+                setAvaliacao(undefined);
+            } catch (error) {
+                // @ts-ignore
+                alert("Erro ao buscar produtos:"+error.response.data.message)
+            }finally {
+                setIsLoading(false);
+            }
         };
-        setProdutos((prevProdutos) => [...prevProdutos, novoProduto]);  // atualiza o estado `produtos` com o novo produto
-        // limpa o estado `produto` e `avaliacao` após a pesquisa
-        setProduto("");
-        setAvaliacao(undefined);
+        pesquisarProdutoAPI();
+
     };
 
     return (
         <div>
+            <div className="relative">
+                {isLoading && (
+                    <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
+                        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-300"></div>
+                    </div>
+                )}
+            </div>
             <div className="relative bg-gray-900 p-5 rounded-lg h-6/12">
                 <input
                     type="text"
