@@ -31,7 +31,7 @@ export default function Tabela() {
                 let novoProduto = {
                     id: produtos.length + 1,
                     nome: data.data.produto,
-                    avaliacao: data.data.avaliacao || 0
+                    avaliacao: data.data.sentimento || 0
                 };
                 setProdutos((prevProdutos) => [...prevProdutos, novoProduto]);
                 setProduto("");
